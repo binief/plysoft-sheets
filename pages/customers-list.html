@@ -1,0 +1,29 @@
+<div ng-controller="CustomerListCtrl as ctrl">
+
+    <button type="button" ng-click="ctrl.addData()">ADD</button>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in ctrl.listdata">
+                    <td>{{$index+1}}</td>
+                    <td>{{x[1]}}</td>
+                    <td>{{x[2]}}</td>
+                    <td><a href="#/customers/{{$index+1}}">Edit</a>
+                        <a href="javascript:void(0)" ng-click="ctrl.delete($index+1)">Delete</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

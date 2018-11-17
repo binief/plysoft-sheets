@@ -6,7 +6,7 @@ app.controller(
         DataStoreInitService) {
         var ctrl = this;
 
-        ctrl.msg = "Hello";
+
 
         ctrl.isGoogleSigned = false;
 
@@ -14,12 +14,14 @@ app.controller(
             GapiService.handleClientLoad();
         };
 
+        $rootScope.sheetModels = null;
         $rootScope.$on("googleLoginEvent", function(event, data) {
             ctrl.isGoogleSigned = data;
 
+            $rootScope.sheetModels = null;
             if (data) {
                 DataStoreInitService.createDataStore().then(function(response) {
-                    console.log(response);
+                    $rootScope.sheetModels = response;
                 }, function(response) {
                     console.log('Error: ' + response);
                 });

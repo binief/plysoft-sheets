@@ -5,7 +5,8 @@ app.factory('DataStoreInitService', [
     '$q',
     '$httpParamSerializer',
     '$rootScope',
-    function($http, $q, $httpParamSerializer, $rootScope) {
+    'SheetPropertiesService',
+    function($http, $q, $httpParamSerializer, $rootScope, SheetPropertiesService) {
 
         var self = {
             createDataStore: function() {
@@ -36,11 +37,11 @@ app.factory('DataStoreInitService', [
                                     var id = it.id;
 
                                     if (fileName == title) {
-                                        var range=self.getHeaders(fileName).range;
+                                        var range = SheetPropertiesService.getHeaders(fileName).range;
                                         var newFileStore = {
-                                            "title": title,
-                                            "id": id,
-                                            "range": range
+                                                "title":title,
+                                                "id": id,
+                                                "range": range
                                         }
                                         fileStore.push(newFileStore);
                                         isCreate = false;
@@ -65,9 +66,9 @@ app.factory('DataStoreInitService', [
                             var it = fileToCreate[i];
                             self.createFile(it).then(function(d) {
                                     var newFileStore = {
-                                        "title": d.title,
-                                        "id": d.id,
-                                        "range": d.range
+                                            "title": d.title,
+                                            "id": d.id,
+                                            "range": d.range
                                     }
                                     fileStore.push(newFileStore);
                                 },
@@ -99,7 +100,7 @@ app.factory('DataStoreInitService', [
                 var request = gapi.client.sheets.spreadsheets.create({}, spreadsheetBody);
                 request.then(function(response) {
                     var title = response.result.properties.title;
-                    var valueRangeBody = self.getHeaders(title);
+                    var valueRangeBody = SheetPropertiesService.getHeaders(title);
 
                     var d = {
                         id: response.result.spreadsheetId,
@@ -131,22 +132,23 @@ app.factory('DataStoreInitService', [
 
 
                 return deferred.promise;
-            },
-            getHeaders: function(name) {
-
-                if (name == "Plysoft-Suppliers" || name == "Plysoft-Customers") {
-                    return {
-                        "range": "Sheet1!A1:A2",
-                        "values": [
-                            [
-                                "Name", "Address"
-                            ]
-                        ]
-                    }
-                }
-
-
             }
+            /*,
+                        getHeaders: function(name) {
+
+                            if (name == "Plysoft-Suppliers" || name == "Plysoft-Customers") {
+                                return {
+                                    "range": "Sheet1!A1:A2",
+                                    "values": [
+                                        [
+                                            "Name", "Address"
+                                        ]
+                                    ]
+                                }
+                            }
+
+
+                        }*/
         };
 
         return self;

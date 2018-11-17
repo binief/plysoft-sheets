@@ -13,11 +13,10 @@ app.factory('GapiService', [
     function($http, $q, $httpParamSerializer, $rootScope) {
         var self = {
             handleClientLoad: function() {
-               return gapi.load('client:auth2', self.initClient);
+                return gapi.load('client:auth2', self.initClient);
             },
             initClient: function() {
-                
-                
+
                 gapi.client.init({
                     apiKey: API_KEY,
                     clientId: CLIENT_ID,
@@ -29,25 +28,25 @@ app.factory('GapiService', [
 
                     // Handle the initial sign-in state.
                     self.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                    
-                    
+
+
                     //authorizeButton.onclick = handleAuthClick;
                     //signoutButton.onclick = handleSignoutClick;
                 });
-                
+
             },
             updateSigninStatus: function(isSignedIn) {
-                
-                
-                if(!isSignedIn){
+
+                if (!isSignedIn) {
                     console.log("Not Logged in");
-                    self.handleAuthClick();
-                }else{
-                    console.log("Logged in");
-                    $rootScope.$broadcast("googleLoginEvent",isSignedIn);
+                    //self.handleAuthClick();
+                    $rootScope.$broadcast("googleLoginEvent", isSignedIn);
                 }
-                
-                
+                else {
+                    console.log("Logged in");
+                    $rootScope.$broadcast("googleLoginEvent", isSignedIn);
+                }
+
                 /* if (isSignedIn) {
                      authorizeButton.style.display = 'none';
                      signoutButton.style.display = 'block';
@@ -60,6 +59,9 @@ app.factory('GapiService', [
             },
             handleAuthClick: function(event) {
                 gapi.auth2.getAuthInstance().signIn();
+            },
+            handleSignOutClick: function(event) {
+                gapi.auth2.getAuthInstance().signOut();
             }
         }
         return self;

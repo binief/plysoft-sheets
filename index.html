@@ -18,14 +18,16 @@
 </head>
 
 <body ng-controller="IndexCtrl as ctrl" ng-cloak>
+    
+    
 
-    <div ng-if="!ctrl.isGoogleSigned" class="loginDiv">
+    <div ng-if="ctrl.isGoogleSigned==false" class="loginDiv">
 
         <button class="loginBtn loginBtn--google" ng-click="ctrl.doLogin()">Login with Google</button>
 
     </div>
 
-    <div ng-if="ctrl.isGoogleSigned">
+    <div ng-if="ctrl.isGoogleSigned==true">
 
         <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
             <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +74,10 @@
                             <a class="nav-link" href="#">Export</a>
                         </li>-->
                          <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Suppliers</a>
+                            <a class="nav-link" href="#/suppliers">Suppliers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#/customers">Customers</a>
                         </li>
                     </ul>
 
@@ -105,7 +110,8 @@
                 </nav>
 
                 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                    <h1>Dashboard</h1>
+                    <div ng-view></div>
+                    <!--<h1>Dashboard</h1>
 
                     <section class="row text-center placeholders">
                         <div class="col-6 col-sm-3 placeholder">
@@ -257,7 +263,9 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>-->
+                    
+                    
                 </main>
             </div>
         </div>
@@ -275,10 +283,20 @@
     <script src="app/app.js"></script>
 
     <script src="app/services/google-gapi.js"></script>
+    <script src="app/services/sheetproperties.js"></script>
     <script src="app/services/sheets.js"></script>
     <script src="app/services/datastore-init.js"></script>
+    <script src="app/services/uuid-service.js"></script>
+    <script src="app/services/supplier-service.js"></script>
+    <script src="app/services/customer-service.js"></script>
+    
+    <script src="app/route.js"></script>
 
     <script src="app/controller/index.js"></script>
+    <script src="app/controller/supplier-list.js"></script>
+    <script src="app/controller/supplier-crud.js"></script>
+    <script src="app/controller/customer-list.js"></script>
+    <script src="app/controller/customer-crud.js"></script>
 </body>
 
 </html>
